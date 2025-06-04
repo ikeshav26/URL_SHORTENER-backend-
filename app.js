@@ -2,7 +2,8 @@ import express from 'express';
 import { nanoid } from 'nanoid';
 import dotenv from 'dotenv';
 import connectDB from './src/config/monogo.config.js'
-import urlSchema from './src/models/short.model.js'
+import urlSchema from './src/models/shortUrl.model.js'
+import shortUrlRoute from './src/routes/shortUrl.route.js'
 
 const app=express();
 dotenv.config();
@@ -15,16 +16,7 @@ app.use(express.urlencoded({extended:true}));
 
 
 //Routes
-app.post('/api/create',(req,res)=>{
-    const {url}=req.body;
-    const shorturl =nanoid(7);
-    const newUrl=new urlSchema({
-        full_url:url,
-        short_url:shorturl
-    })
-    newUrl.save()
-    res.send(nanoid(7));
-})
+app.use('/api/create',shortUrlRoute);
 
 
 app.get('/api/:shorturl',async(req,res)=>{
