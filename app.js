@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './src/config/monogo.config.js'
 import urlSchema from './src/models/shortUrl.model.js'
 import shortUrlRoute from './src/routes/shortUrl.route.js'
+import { redirectFromShortUrl } from './src/controller/shortUrl.controller.js';
 
 const app=express();
 dotenv.config();
@@ -19,17 +20,7 @@ app.use(express.urlencoded({extended:true}));
 app.use('/api/create',shortUrlRoute);
 
 
-app.get('/api/:shorturl',async(req,res)=>{
-    const {shorturl}=req.params;
-    const urlDoc=await urlSchema.findOne({
-        short_url:shorturl
-    });
-    if(urlDoc){
-        res.redirect(urlDoc.full_url);
-    }else{
-        res.status(404).send('URL not found');
-    }
-})
+app.get('/api/:shorturl',redirectFromShortUrl);
 
 
 app.get('/',(req,res)=>{
