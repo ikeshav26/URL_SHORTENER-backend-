@@ -1,5 +1,6 @@
-import { createShortUrlWithoutUser, urlDocFromShortUrl } from '../services/shortUrl.service.js';
+import { createShortUrlWithoutUser } from '../services/shortUrl.service.js';
 import urlSchema from '../models/shortUrl.model.js';
+import { urlDocFromShortUrl } from '../dao/shortUrl.js';
 import dotenv from 'dotenv';
 dotenv.config();
 

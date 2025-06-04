@@ -11,3 +11,12 @@ export const saveShortUrl=async(shortUrl,fullUrl,userId)=>{
     }
     newUrl.save()
 }
+
+export const urlDocFromShortUrl=async(shorturl)=>{
+     const urlDoc=await urlSchema.findOneAndUpdate({
+        short_url:shorturl
+    },{
+        $inc:{clicks:1}
+    });
+    return urlDoc;
+}

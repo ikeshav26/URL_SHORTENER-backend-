@@ -15,9 +15,3 @@ export const createShortUrlWithUser=async (url,userId)=>{
     return shorturl;
 }
 
-export const urlDocFromShortUrl=async(shorturl)=>{
-     const urlDoc=await urlSchema.findOne({
-        short_url:shorturl
-    });
-    return urlDoc;
-}
