@@ -4,7 +4,8 @@ import { signToken } from '../utils/helper.js';
 import bcrypt from 'bcrypt';
 
 export const registerUser=async(name,email,password)=>{
-    const user=await findUserByEmail(email);
+    try{
+        const user=await findUserByEmail(email);
     if(user){
         throw new Error('User already exists');
     }
@@ -12,15 +13,26 @@ export const registerUser=async(name,email,password)=>{
     const newUser=await createUser(name,email,password);
     const token=await signToken({id:newUser._id})
     return token;
+    }
+    catch(err){
+        console.error(err);
+        throw new Error('Error registering user', err.message);
+    }
 }
 
 
 export const loginUser=async(email,password)=>{
-    const user=await findUserByEmail(email);
+    try{
+        const user=await findUserByEmail(email);
     const isPasswordValid=bcrypt.compareSync(password, user.password);
     if(!user || !isPasswordValid){
         throw new Error('Invalid email or password');
     }
     const token=await signToken({id:user._id})
     return token;
+    }
+    catch(err){
+        console.error(err);
+        throw new Error('Error logging in user', err.message);
+    }
 }

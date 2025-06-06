@@ -4,6 +4,7 @@ import jsonwebtokken from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
+
 export const generateNanoId=(length)=>{
     try{
         return nanoid(length);
@@ -13,11 +14,27 @@ export const generateNanoId=(length)=>{
     }
 };
 
+
+
 export const signToken=(payload)=>{
-    const token=jsonwebtokken.sign(payload, process.env.JWT_SECRET,{expiresIn: '1h'} )// Token expires in 1 hour);
+    try{
+        const token=jsonwebtokken.sign(payload, process.env.JWT_SECRET,{expiresIn: '1h'} )// Token expires in 1 hour);
     return token;
+    }
+    catch(error){
+        console.error('Error signing token:', error);
+        throw new Error('Failed to sign token');
+    }
 }
 
+
+
 export const verifyToken=(token)=>{
-    return jsonwebtokken.verify(token,process.env.JWT_SECRET)
+   try{
+     return jsonwebtokken.verify(token,process.env.JWT_SECRET)
+   }
+   catch(error){
+    console.error('Error verifying token:', error);
+    throw new Error('Failed to verify token');
+   }
 }
