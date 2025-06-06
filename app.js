@@ -7,6 +7,7 @@ import shortUrlRoute from './src/routes/shortUrl.route.js'
 import auth_routes from './src/routes/auth.route.js';
 import { redirectFromShortUrl } from './src/controller/shortUrl.controller.js';
 import cors from 'cors';
+import cookieParser from "cookie-parser";
 
 
 
@@ -18,6 +19,7 @@ const PORT=process.env.PORT;
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
 
 app.use(cors());
 

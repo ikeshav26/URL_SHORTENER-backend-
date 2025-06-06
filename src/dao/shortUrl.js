@@ -34,3 +34,8 @@ export const urlDocFromShortUrl = async (shorturl) => {
          throw new Error('Failed to fetch URL document');
    }
 }
+
+
+export const getCustomShortUrl=async(shortUrl)=>{
+    return await urlSchema.findOne({short_url:shortUrl});
+}

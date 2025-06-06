@@ -26,7 +26,7 @@ export const loginUser=async(email,password)=>{
         const user=await findUserByEmail(email);
     const isPasswordValid=bcrypt.compareSync(password, user.password);
     if(!user || !isPasswordValid){
-        throw new Error('Invalid email or password');
+        throw new Error('Invalid Credentials');
     }
     const token=await signToken({id:user._id})
     return token;
