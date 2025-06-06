@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
-import { User } from '../models/user.model.js';
 import { createUser, findUserByEmail, findUserById } from '../dao/user.dao.js';
+import { signToken } from '../utils/helper.js';
 
 export const registerUser=async(name,email,password)=>{
     const user=await findUserByEmail(email);
@@ -9,6 +9,6 @@ export const registerUser=async(name,email,password)=>{
     }
 
     const newUser=await createUser(name,email,password);
-    const token=jsonwebtoken.sign({id:newUser._id},process.env.JWT_SECRET,{expiresIn:'1h'});
+    const token=await signToken({id:newUser._id})
     return token;
 }
