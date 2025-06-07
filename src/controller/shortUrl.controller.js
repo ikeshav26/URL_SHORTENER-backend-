@@ -2,6 +2,7 @@ import { createShortUrlWithoutUser, createShortUrlWithUser } from '../services/s
 import urlSchema from '../models/shortUrl.model.js';
 import { urlDocFromShortUrl } from '../dao/shortUrl.js';
 import dotenv from 'dotenv';
+import { verifyToken } from '../utils/helper.js';
 dotenv.config();
 
 // creating short url 
@@ -48,5 +49,20 @@ export const createShortUrlAuth = async (req, res) => {
     } catch (error) {
         console.error('Error creating custom short URL:', error);
         res.status(500).send('Internal Server Error');
+    }
+};
+
+
+export const getAllUrls = async (req, res) => {
+    try {
+        // If you want to get all URLs for the logged-in user:
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized: user not found" });
+        }
+        const urls = await urlSchema.find({ user: req.user._id });
+        res.json(urls);
+    } catch (err) {
+        console.error('Error fetching URLs:', err);
+        res.status(500).send('Internal server error');
     }
 };

@@ -8,6 +8,8 @@ import auth_routes from './src/routes/auth.route.js';
 import { redirectFromShortUrl } from './src/controller/shortUrl.controller.js';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
+import { getAllUrls } from './src/controller/shortUrl.controller.js';
+import { authMiddleware } from './src/middleware/auth.middleware.js';
 
 
 
@@ -34,6 +36,7 @@ app.use('/api/create',shortUrlRoute);
 
 
 app.get('/api/:shorturl',redirectFromShortUrl);
+
 
 
 app.get('/',(req,res)=>{
