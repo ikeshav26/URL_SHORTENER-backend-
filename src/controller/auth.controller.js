@@ -16,7 +16,7 @@ export const register=async(req,res)=>{
 export const login=async(req,res)=>{
     try{
         const {email,password}=req.body;
-    const token=await loginUser(email,password);
+    const{ token,user}=await loginUser(email,password);
     res.cookie('token',token,cookieOptions);
     res.status(200).json({message:"User logged in successfully"})
     }

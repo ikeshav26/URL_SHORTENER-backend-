@@ -12,12 +12,8 @@ export const createShortUrl = async (req, res) => {
             return res.status(400).send('URL is required');
         }
 
-        let shortUrl;
-        if (req.user) {
-            shortUrl = await createShortUrlWithUser(url, req.user._id);
-        } else {
-            shortUrl = await createShortUrlWithoutUser(url);
-        }
+        let shortUrl=await createShortUrlWithoutUser(url);
+        
         res.send(process.env.APP_URI + shortUrl);
     } catch (error) {
         console.error('Error creating short URL:', error);
@@ -48,7 +44,7 @@ export const createShortUrlAuth = async (req, res) => {
         }
         const { url, customUrl } = req.body;
         const shortUrl = await createShortUrlWithUser(url, req.user._id, customUrl);
-        return res.send(process.env.APP_URI + shortUrl);
+        return res.send(process.env.APP_URI+ shortUrl);
     } catch (error) {
         console.error('Error creating custom short URL:', error);
         res.status(500).send('Internal Server Error');

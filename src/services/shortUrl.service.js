@@ -14,19 +14,19 @@ export const createShortUrlWithoutUser=async (url)=>{
     }
 }
 
-export const createShortUrlWithUser=async (url,userId,customUrl=null)=>{
-   try{
-     const shorturl =customUrl || generateNanoId(7);
-     const exists=getCustomShortUrl(customUrl);
-     if(exists){
-        throw new Error('This custom url already exists');
-     }
+export const createShortUrlWithUser = async (url, userId, customUrl) => {
+    try {
+        const shorturl = customUrl ? customUrl : generateNanoId(7);
+        const exists = await getCustomShortUrl(shorturl); // <-- await added
+        if (exists) {
+            throw new Error('This custom url already exists');
+        }
 
-     await saveShortUrl(shorturl, url, userId);
-    return shorturl;
-   }catch(error){
+        await saveShortUrl(shorturl, url, userId);
+        return shorturl;
+    } catch (error) {
         console.error('Error creating short URL with user:', error);
         throw new Error('Failed to create short URL with user');
-   }
-}
+    }
+};
 

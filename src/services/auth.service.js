@@ -29,7 +29,7 @@ export const loginUser=async(email,password)=>{
         throw new Error('Invalid Credentials');
     }
     const token=await signToken({id:user._id})
-    return token;
+    return {token,user};
     }
     catch(err){
         console.error(err);
