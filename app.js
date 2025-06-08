@@ -16,7 +16,7 @@ import { authMiddleware } from './src/middleware/auth.middleware.js';
 const app=express();
 dotenv.config();
 
-const PORT=process.env.PORT;
+const PORT=process.env.PORT || 5001;
 
 //middlewares
 app.use(express.json());
@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use(cors({
-    origin:'http://localhost:5173', // your frontend URL
+    origin:'https://url-shortener-frontend-gray.vercel.app', // your frontend URL
   credentials: true
 }));
 
