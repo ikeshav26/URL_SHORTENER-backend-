@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use(cors({
-    origin:'https://urlshortener.ikeshav.tech/', // your frontend URL
+    origin:'https://urlshortener.ikeshav.tech', // your frontend URL
   credentials: true
 }));
 
